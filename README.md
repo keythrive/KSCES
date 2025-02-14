@@ -1,5 +1,3 @@
-## Koushi Chutoh Kyoiku School 
-------
 
 <center>
 
@@ -12,7 +10,7 @@
 
 ----
 
-### 概要：
+### 概要：<!-- omit in toc -->
 
 - 従来のプログラミング入門とは一線を画した全く新しい、
 - 挫折しないプログラミング入門の導入編
@@ -370,17 +368,318 @@ plt.show()
 
 ----
 
-### シューティングゲーム？
+### レトロゲーム：ブレイクアウト、ブロック崩し
+
+- お題：　懐かしいブロック崩しゲームを作る
+- 条件：　一行もコードを書かない
+- 生成AIへのお願いメッセージ（プロンプト）を考えてみよう
+
+```
+Colaboratory環境、つまり、Webブラウザ環境で動作するブロック崩しゲームを作ってください。
+Python言語をホストに、ゲスト言語はJavaScriptを生成して、ブラウザ上で対話的に操作できるようなゲームにしてください。
+左右のキーでパドルを動かし、ボールを打ち返してください。衝突判定は甘めにしてください。
+```
+
+- 生成AIの回答例（時と場合によって変ります）
+
+```python
+
+from IPython.display import display, HTML
+
+html_code = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Breakout Game</title>
+    <style>
+        body { text-align: center; margin: 0; padding: 0; }
+        canvas { background: black; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    <canvas id='gameCanvas' width='800' height='600'></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let paddle = { x: canvas.width / 2 - 35, y: canvas.height - 20, width: 70, height: 10 };
+        let ball = { x: canvas.width / 2, y: canvas.height - 30, radius: 10, dx: 2, dy: -2 };
+        let bricks = [];
+        let brickRowCount = 5;
+        let brickColumnCount = 8;
+        let brickWidth = 75;
+        let brickHeight = 20;
+        let brickPadding = 10;
+        let brickOffsetTop = 30;
+        let brickOffsetLeft = 30;
+        let keys = {};
+
+        for (let c = 0; c < brickColumnCount; c++) {
+            bricks[c] = [];
+            for (let r = 0; r < brickRowCount; r++) {
+                bricks[c][r] = { x: 0, y: 0, status: 1 };
+            }
+        }
+
+        document.addEventListener('keydown', (e) => { keys[e.key] = true; });
+        document.addEventListener('keyup', (e) => { keys[e.key] = false; });
+
+        function drawPaddle() {
+            ctx.fillStyle = 'white';
+            ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+        }
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawBricks() {
+            for (let c = 0; c < brickColumnCount; c++) {
+                for (let r = 0; r < brickRowCount; r++) {
+                    if (bricks[c][r].status == 1) {
+                        let brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+                        let brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+                        bricks[c][r].x = brickX;
+                        bricks[c][r].y = brickY;
+                        ctx.fillStyle = 'green';
+                        ctx.fillRect(brickX, brickY, brickWidth, brickHeight);
+                    }
+                }
+            }
+        }
+
+        function collisionDetection() {
+            for (let c = 0; c < brickColumnCount; c++) {
+                for (let r = 0; r < brickRowCount; r++) {
+                    let b = bricks[c][r];
+                    if (b.status == 1) {
+                        if (ball.x > b.x && ball.x < b.x + brickWidth && ball.y > b.y && ball.y < b.y + brickHeight) {
+                            ball.dy = -ball.dy;
+                            b.status = 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        function update() {
+            if (keys['ArrowLeft'] && paddle.x > 0) paddle.x -= 7;
+            if (keys['ArrowRight'] && paddle.x < canvas.width - paddle.width) paddle.x += 7;
+
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) {
+                ball.dx = -ball.dx;
+            }
+            if (ball.y + ball.dy < ball.radius) {
+                ball.dy = -ball.dy;
+            } else if (ball.y + ball.dy > canvas.height - ball.radius) {
+                if (ball.x > paddle.x && ball.x < paddle.x + paddle.width) {
+                    ball.dy = -ball.dy;
+                } else {
+                    document.location.reload();
+                }
+            }
+
+            collisionDetection();
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawPaddle();
+            drawBall();
+            drawBricks();
+        }
+
+        setInterval(update, 1000 / 60);
+    </script>
+</body>
+</html>
+"""
+
+display(HTML(html_code))
+
+```
+
+![alt text](image-7.png)
+
+----
+
+### レトロゲーム：　シューティング
+
+
+- お題：　かんたんなシューティングゲームを作る
+- 条件：　一行もコードを書かない
+- 生成AIへのお願いメッセージ（プロンプト）を考えてみよう
+
+```
+Colaboratory上で、Pythonから、HTMLを生成して、実行する方法を用いて、HTMLベースのレトロシューティングゲームを生成実行してください
+```
 
 
 
 
+```python
+from IPython.display import display, HTML
 
+html_code = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Retro Shooting Game</title>
+    <style>
+        body { text-align: center; margin: 0; padding: 0; }
+        canvas { background: black; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let player = { x: canvas.width / 2 - 15, y: canvas.height - 30, width: 30, height: 30 };
+        let bullets = [];
+        let enemies = [];
+        let enemySpeed = 2;
+        let bulletSpeed = 5;
+        let keys = {};
+
+        document.addEventListener('keydown', (e) => { keys[e.key] = true; });
+        document.addEventListener('keyup', (e) => { keys[e.key] = false; });
+
+        function drawPlayer() {
+            ctx.fillStyle = 'white';
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+        }
+
+        function drawBullets() {
+            ctx.fillStyle = 'red';
+            bullets.forEach((bullet, index) => {
+                bullet.y -= bulletSpeed;
+                if (bullet.y < 0) {
+                    bullets.splice(index, 1);
+                } else {
+                    ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+                }
+            });
+        }
+
+        function drawEnemies() {
+            ctx.fillStyle = 'green';
+            enemies.forEach((enemy, index) => {
+                enemy.y += enemySpeed;
+                if (enemy.y > canvas.height) {
+                    enemies.splice(index, 1);
+                } else {
+                    ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+                }
+            });
+        }
+
+        function spawnEnemy() {
+            let x = Math.random() * (canvas.width - 30);
+            enemies.push({ x: x, y: 0, width: 30, height: 30 });
+        }
+
+        function detectCollisions() {
+            bullets.forEach((bullet, bIndex) => {
+                enemies.forEach((enemy, eIndex) => {
+                    if (bullet.x < enemy.x + enemy.width &&
+                        bullet.x + bullet.width > enemy.x &&
+                        bullet.y < enemy.y + enemy.height &&
+                        bullet.y + bullet.height > enemy.y) {
+                        bullets.splice(bIndex, 1);
+                        enemies.splice(eIndex, 1);
+                    }
+                });
+            });
+        }
+
+        function update() {
+            if (keys['ArrowLeft'] && player.x > 0) player.x -= 5;
+            if (keys['ArrowRight'] && player.x < canvas.width - player.width) player.x += 5;
+            if (keys[' '] && bullets.length < 3) bullets.push({ x: player.x + player.width / 2 - 2.5, y: player.y, width: 5, height: 10 });
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawPlayer();
+            drawBullets();
+            drawEnemies();
+            detectCollisions();
+        }
+
+        setInterval(update, 1000 / 60);
+        setInterval(spawnEnemy, 1000);
+    </script>
+</body>
+</html>
+"""
+display(HTML(html_code))
+```
+
+![alt text](image-8.png)
 
 -----
 
 ### 生成AIとの関係、立ち位置
 
+- 30年前、プログラミングするAIは夢の夢だった
+- プログラミングは文芸作品であり、
+- ゲームは対話できるアートであった
+- アートを生み出す創造力は人間らしさ、
+- 人間に与えられた特権であった
+- 
+- だが、しかし・・・
+- 
+- ここ数年の生成AI,大規模言語モデルの技術の進歩はすさまじく
+- 言葉を巧みにすばやく操るスキルは、人間のそれを超えてきた
+- 普通の大学生のプログラミング能力は、生成AIに大きく水をあけられた
+- 
+- 生成AIにプロンプトで指示を出すだけの立ち位置から
+- 大きな勘違いをしてはいけない
+- 瞬時にロジックを組み立て回答する**生成AIが教師であって**、
+- **プロンプトを考えて投げるだけなら、その瞬間はただの生徒に過ぎない**
+- 生成AI謹製コードを、**しっかり消化吸収し**、
+- それを**上回るロジックや技法を工夫する**ことで、ようやく対等の立場に並べる
+-「もくもく」「自主トレ」「秘密特訓」「かべうち」に文句を言わずに
+- 親切に付き合ってくれる生成AIは頼もしいパートナーである
+- 正しい認識と正しい使い方を間違わずに、有効活用することが
+- 自らを鍛え成長する
+
 ----
 
 ### 向いている? 向いていない? これからどうする？
+
+- 賢すぎる人は、考えるだけで理解し、地道な作業に関心がない
+- 小学校～高校まで、好き嫌いを克服できない人は、忍耐が続かない
+- 勉強嫌い、宿題嫌い、仕事が嫌い、も同様
+- プログラミングが、面白く楽しい時間だと感じること
+- 解けない謎、攻略出来ない難問、上手くいかない時に、ワクワクできること
+- 難問を攻略したときに、達成感と喜べること
+- エラーや上手く動作しない時、謎解き・犯人捜しの名探偵に慣れる人は
+- プログラムの世界に飛び込んで、思う存分、楽しんでほしい
+
+### 何度失敗しても、再チャレンジできる世界
+
+- 「形あるものはいつか壊れる」
+  
+- ハードウェア、モノづくりは壊したら、基本、取返しがつかない
+- 
+- その点、ソフトウェアは、材料費はかからず、
+- 時間を巻き戻して、壊した操作を何度でもキャンセルできる：Undo/Redo
+  
+- 過ぎ去った時間は取り返せないが、失敗から学び、着実に成長が進む
+- 何もしないより、手を動かすべし
+- 試行錯誤の中から、奇跡の創造物を生み出すのが
+- クリエイター・職人である
+- 
+- 人の心を揺さぶる創造作品は、
+- 山のような試行錯誤と失敗の中から生まれてくる
+ 
+- 失敗しても何度でもやり直せる環境・ツールを
+- 常に自分の手元において、悩める時間も迷える時間も、
+- ぼーっと過ごすより、ワクワクな冒険のお供としよう
+  
