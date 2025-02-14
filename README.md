@@ -9,6 +9,16 @@
 </center>
 
 ----
+- [準備体操](#準備体操)
+- [準備体操がすでに難しい場合](#準備体操がすでに難しい場合)
+- [図形を描く](#図形を描く)
+- [2Dから3D図形へ](#2dから3d図形へ)
+- [銀河系を描く](#銀河系を描く)
+- [レトロゲーム：ブレイクアウト、ブロック崩し](#レトロゲームブレイクアウトブロック崩し)
+- [レトロゲーム：　シューティング](#レトロゲームシューティング)
+- [生成AIとの関係、立ち位置](#生成aiとの関係立ち位置)
+- [向いている? 向いていない? これからどうする？](#向いている-向いていない-これからどうする)
+- [何度失敗しても、再チャレンジできる世界](#何度失敗しても再チャレンジできる世界)
 
 ### 概要：<!-- omit in toc -->
 
@@ -16,6 +26,9 @@
 - 挫折しないプログラミング入門の導入編
 - PokeLLMONの実況ナレーションの紹介から、生成AIの実力、世界観を知ってもらう
 - 自分達の仕事・生活に及ぼすインパクトを感じてもらう
+
+
+<div style="page-break-before: always;"></div>
 
 ----
 
@@ -35,11 +48,20 @@
 
 - Webブラウザ（Chrome,Safari, Edge,Firefox ・‥）を起動
 - Googleアカウントでログイン:　URL： https://www.google.co.jp/
+
+![alt text](image-9.png)
+
+- 本ファイルの電子情報にアクセス：　https://github.com/keythrive/KSCES/
+
 - Colaboratoryに入る: URL: https://colab.research.google.com/
 - 「ノートブックを新規作成」
+
+![alt text](image-10.png)
 - 「+ コード」をクリックしてコードの入力状態へ
 - 🔷Gemini：「利用可能なAI機能」をつかってコード生成を試す：「コードを生成する」
 - 「日本語の文字列を読み上げる発話コードをPythonで作ってください。」
+
+![alt text](image-11.png)
 
 ```python
 # prompt: 日本語の文字列を読み上げる発話コードをPythonで作ってください。
@@ -60,6 +82,24 @@ speak_japanese("憧れてしまったら超えられない")
 - 実行ボタン（▼）をクリックして動作確認する
 
 
+<div style="page-break-before: always;"></div>
+
+---
+### 準備体操がすでに難しい場合
+
+- ファイルのダウンロード： 0215Koushi.ipynb
+
+   https://github.com/keythrive/KSCES/blob/main/0215Koushi.ipynb
+  
+![alt text](image-12.png)
+
+- 途中、どうしても難しい場合は、ダウンロードしたファイルをColaboratoryにアップロードできる
+
+![alt text](image-13.png)
+
+
+
+<div style="page-break-before: always;"></div>
 
 ----
 
@@ -135,6 +175,8 @@ plt.show()
 ![alt text](image-6.png)
 
 ----
+<div style="page-break-before: always;"></div>
+
 
 ### 2Dから3D図形へ
 
@@ -233,7 +275,11 @@ plt.show()
 ![alt text](image-3.png)
 
 
----
+----
+
+<div style="page-break-before: always;"></div>
+
+
 ###  銀河系を描く
 
 - お題：　銀河系のイメージ図を描く
@@ -367,6 +413,8 @@ plt.show()
 
 
 ----
+<div style="page-break-before: always;"></div>
+
 
 ### レトロゲーム：ブレイクアウト、ブロック崩し
 
@@ -507,6 +555,7 @@ display(HTML(html_code))
 ![alt text](image-7.png)
 
 ----
+<div style="page-break-before: always;"></div>
 
 ### レトロゲーム：　シューティング
 
@@ -623,6 +672,7 @@ display(HTML(html_code))
 ![alt text](image-8.png)
 
 -----
+<div style="page-break-before: always;"></div>
 
 ### 生成AIとの関係、立ち位置
 
@@ -682,4 +732,7 @@ display(HTML(html_code))
 - 失敗しても何度でもやり直せる環境・ツールを
 - 常に自分の手元において、悩める時間も迷える時間も、
 - ぼーっと過ごすより、ワクワクな冒険のお供としよう
-  
+
+----
+
+##　ご清聴ありがとうございました
